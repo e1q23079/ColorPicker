@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Picker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        label {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        input[type="color"] {
+            cursor: pointer;
+        }
+
+        .color-preview {
+            width: 100px;
+            height: 100px;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            background-color: #000000;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Color Picker</h1>
+    <label for="colorPicker">Choose a color: </label><input type="color" id="colorPicker" value="#000000">
+    <div class="color-preview" id="colorPreview"></div>
+    <p id="colorDisplay">Selected color: #000000</p>
+    <button onclick="copyColor()">Copy Color</button>
+
+    <script>
+        const colorInput = document.getElementById('colorPicker');
+        const displayParagraph = document.getElementById('colorDisplay');
+        const colorPreview = document.getElementById('colorPreview');
+
+        colorInput.addEventListener('input', () => {
+            const selectedColor = colorInput.value;
+            displayParagraph.textContent = `Selected color: ${selectedColor}`;
+            displayParagraph.style.color = selectedColor;
+            colorPreview.style.backgroundColor = selectedColor;
+        });
+
+        function copyColor() {
+            const selectedColor = colorInput.value;
+            navigator.clipboard.writeText(selectedColor).then(() => {
+                alert('Color copied to clipboard!');
+            });
+        }
+    </script>
+</body>
+
+</html>
