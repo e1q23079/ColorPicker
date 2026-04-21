@@ -41,12 +41,23 @@
     <label for="colorPicker">Choose a color: </label><input type="color" id="colorPicker" value="#000000">
     <div class="color-preview" id="colorPreview"></div>
     <p id="colorDisplay">Selected color: #000000</p>
-    <button onclick="copyColor()">Copy Color</button>
+    <button onclick="copyColor()">Copy Color URL</button>
 
     <script>
+
+        const params = new URLSearchParams(window.location.search);
+        const initialColor = params.get('color');
+
         const colorInput = document.getElementById('colorPicker');
         const displayParagraph = document.getElementById('colorDisplay');
         const colorPreview = document.getElementById('colorPreview');
+
+        if (initialColor) {
+            colorInput.value = initialColor;
+            displayParagraph.textContent = `Selected color: ${initialColor}`;
+            displayParagraph.style.color = initialColor;
+            colorPreview.style.backgroundColor = initialColor;
+        }
 
         colorInput.addEventListener('input', () => {
             const selectedColor = colorInput.value;
@@ -57,8 +68,13 @@
 
         function copyColor() {
             const selectedColor = colorInput.value;
-            navigator.clipboard.writeText(selectedColor).then(() => {
-                alert('Color copied to clipboard!');
+            const url = new URL(window.location.href);
+
+            url.searchParams.set('color', selectedColor);
+            const selectedColorUrl = url.toString();
+
+            navigator.clipboard.writeText(selectedColorUrl).then(() => {
+                alert('Color URL copied to clipboard!');
             });
         }
     </script>
