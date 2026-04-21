@@ -45,25 +45,27 @@
 
     <script>
 
-        const params = new URLSearchParams(window.location.search);
-        const initialColor = params.get('color');
-
         const colorInput = document.getElementById('colorPicker');
         const displayParagraph = document.getElementById('colorDisplay');
         const colorPreview = document.getElementById('colorPreview');
 
+        const setColor = (color) => {
+            colorInput.value = color;
+            displayParagraph.textContent = `Selected color: ${color}`;
+            displayParagraph.style.color = color;
+            colorPreview.style.backgroundColor = color;
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const initialColor = params.get('color');
+
         if (initialColor) {
-            colorInput.value = initialColor;
-            displayParagraph.textContent = `Selected color: ${initialColor}`;
-            displayParagraph.style.color = initialColor;
-            colorPreview.style.backgroundColor = initialColor;
+            setColor(initialColor);
         }
 
         colorInput.addEventListener('input', () => {
             const selectedColor = colorInput.value;
-            displayParagraph.textContent = `Selected color: ${selectedColor}`;
-            displayParagraph.style.color = selectedColor;
-            colorPreview.style.backgroundColor = selectedColor;
+            setColor(selectedColor);
         });
 
         function copyColor() {
